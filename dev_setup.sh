@@ -37,6 +37,7 @@ Options:
 }
 
 # Parse the command line
+opt_yestoall=false
 opt_forcemimicbuild=false
 opt_allowroot=false
 opt_skipmimicbuild=false
@@ -74,6 +75,9 @@ for var in "$@" ; do
     if [[ ${var} == "-p" ]] || [[ ${var} == "--python" ]] ; then
         param="python"
     fi
+    if [[ ${var} == "-y" ]] ; then
+        opt_yestoall=true
+    fi
 done
 
 if [ $(id -u) -eq 0 ] && [ "${opt_allowroot}" != true ] ; then
@@ -97,6 +101,10 @@ fi
 
 
 function get_YN() {
+    # return 'Y' response to everything
+    if [ "${opt_yestoall}" == true ] ; then
+        return 0
+    fi
     # Loop until the user hits the Y or the N key
     echo -e -n "Choice [${CYAN}Y${RESET}/${CYAN}N${RESET}]: "
     while true; do
