@@ -76,6 +76,7 @@ for var in "$@" ; do
         param="python"
     fi
     if [[ ${var} == "-y" ]] ; then
+        echo "Defaulting all input to Yes"
         opt_yestoall=true
     fi
 done
@@ -103,6 +104,7 @@ fi
 function get_YN() {
     # return 'Y' response to everything
     if [ "${opt_yestoall}" == true ] ; then
+        echo "Yes"
         return 0
     fi
     # Loop until the user hits the Y or the N key
